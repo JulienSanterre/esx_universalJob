@@ -445,7 +445,7 @@ function OpenCraftMenu()
   if Config.EnablePlayerManagement and PlayerData.job ~= nil then
 
     local elements = {
-	  {label = Config.itemrefinedlvl2.label, value = Config.itemrefinedlvl2.name},
+	  {label = Config.itemrefined.label, value = Config.itemrefined.name},
     }
 
     ESX.UI.Menu.CloseAll()
@@ -458,7 +458,7 @@ function OpenCraftMenu()
 		align    = Config.menuAlign,
       },
       function(data, menu)
-        if data.current.value == Config.itemrefinedlvl2.name then
+        if data.current.value == Config.itemrefined.name then
           menu.close()
           TriggerServerEvent('esx_'.. Config.JobName ..':startCraft')
         end

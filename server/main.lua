@@ -31,9 +31,8 @@ local function callFarm(source)
     if PlayersHarvesting[source] == true then
 
       local xPlayer  = ESX.GetPlayerFromId(source)
-      local TabacBlondQuantity = xPlayer.getInventoryItem(Config.itemcollect.name).count
 
-      if TabacBlondQuantity >= Config.maxitemcollect then
+      if xPlayer.getInventoryItem(Config.itemcollect.name).count >= Config.maxitemcollect then
 		TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('you_do_not_room'))
       else
         xPlayer.addInventoryItem(Config.itemcollect.name, Config.itemcollect.give)
@@ -61,23 +60,22 @@ end)
 ------------ Fabrication RAFINAGE --------------
 local function callCraft(source)
 local _source = source
-  SetTimeout(Config.timeToRefinedLvl1, function()
+  SetTimeout(Config.timeToRefined, function()
 		if PlayersCrafting[source] == true then
 
-		  local xPlayer  = ESX.GetPlayerFromId(source)
-		  local TabacBlondQuantity = xPlayer.getInventoryItem(Config.itemrefinedlvl1.name).count
+		  	local xPlayer  = ESX.GetPlayerFromId(source)
 
-		  if TabacBlondQuantity < Config.itemrecolte.get then
-			TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle,_U('not_enough_tabacblond'))
-		  else
-			if xPlayer.getInventoryItem(Config.itemrefinedlvl1.name).count < Config.maxitemrefined then
-			xPlayer.removeInventoryItem(Config.itemrefinedlvl1.name, Config.itemrecolte.get)
-			xPlayer.addInventoryItem(Config.itemrefinedlvl2.name, Config.itemrefinedlvl1.give)
-			callCraft(_source)
+			if xPlayer.getInventoryItem(Config.itemcollect.name).count >= Config.itemrecolte.get then
+				if xPlayer.getInventoryItem(Config.itemrefined.name).count < Config.maxitemrefined then
+					xPlayer.removeInventoryItem(Config.itemcollect.name, Config.itemrecolte.get)
+					xPlayer.addInventoryItem(Config.itemrefined.name, Config.itemrefined.give)
+					callCraft(_source)
+				else
+					TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle,_U('max_item_refined'))
+				end
 			else
-				TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('you_do_not_room'))
+				TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle,_U('not_enough_tabacblond'))
 			end
-		  end
 		end
 	end)
 end
@@ -100,20 +98,20 @@ end)
 ------------ Fabrication ITEM de vente --------------
 local function callCraft2(source)
 local _source = source
-  SetTimeout(Config.timeToRefinedLvl2, function()
+  SetTimeout(Config.timeToRefined, function()
     if PlayersCrafting2[source] == true then
       local xPlayer  = ESX.GetPlayerFromId(source)
-      local itemrefinedlvl2Quantity  = xPlayer.getInventoryItem(Config.itemrefinedlvl2.name).count
-      if itemrefinedlvl2Quantity < Config.itemrefinedlvl1.get then
-		TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('not_enough_tabacblond_sec'))
-      else
-		if xPlayer.getInventoryItem(Config.itemrefinedlvl2.name).count < Config.maxitemrefined2 then
-			xPlayer.removeInventoryItem(Config.itemrefinedlvl2.name, Config.itemrefinedlvl1.get)
-			xPlayer.addInventoryItem(Config.itemsell.name , Config.itemrefinedlvl2.give)
+	  
+	  if xPlayer.getInventoryItem(Config.itemrefined.name).count >= Config.itemrefined.get then
+		if xPlayer.getInventoryItem(Config.itemsell.name).count < Config.maxitemsell then
+			xPlayer.removeInventoryItem(Config.itemrefined.name, Config.itemrefined.get)
+			xPlayer.addInventoryItem(Config.itemsell.name , Config.itemsell.give)
 			callCraft2(_source)
 		else
-			TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('you_do_not_room'))
+			TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('max_item_sell'))
 		end
+      else
+		TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('not_enough_tabacblond_sec'))
       end
     end
   end)

@@ -5,8 +5,7 @@
 -----------------------------------------------------------------------------------
 Config                            	= {}
 Config.itemcollect 					= {}
-Config.itemrefinedlvl1				= {}
-Config.itemrefinedlvl2				= {}
+Config.itemrefined			= {}
 Config.itemsell 					= {}
 Config.itemrecolte					= {}
 
@@ -150,7 +149,7 @@ Config.Zones = {
   },
 
   SellFarm = {
-    Pos   = {x = -325.92, y = -1348.16, z = 31.36-0.98-0.98},
+    Pos   = {x = -325.92, y = -1348.16, z = 31.36-0.98},
     Size  = { x = 1.6, y = 1.6, z = 1.0 },
 	Color = {r = 136, g = 243, b = 216},
     Name  = "Vente des produits",
@@ -197,35 +196,28 @@ Config.cantGetThis = {
 }
 
 -- COLLECT
-Config.maxitemcollect = 50
+Config.maxitemcollect = 60
 
-Config.timeTocollect = 8000
+Config.timeTocollect = 4000
 
 Config.itemcollect.label = "Tabac Blond"
 Config.itemcollect.name = 'tabacblond'
 Config.itemcollect.give = 1
 
 -- REFINED LVL 1
-Config.maxitemrefined = 50
+Config.maxitemrefined = 30
 Config.itemrecolte.get = 2
 
-Config.timeToRefinedLvl1 = 8000
-Config.itemrefinedlvl1.label = 'Tabac Blond Sec'
-Config.itemrefinedlvl1.name = 'tabacblond'
-Config.itemrefinedlvl1.give = 1
-
--- REFINED LVL 2
-Config.maxitemrefined2 = 50
-Config.itemrefinedlvl1.get = 2
-
-Config.timeToRefinedLvl2 = 8000
-Config.itemrefinedlvl2.label = 'Tabac Blond Sec'
-Config.itemrefinedlvl2.name = 'tabacblondsec'
-Config.itemrefinedlvl2.give = 1
+Config.timeToRefined = 4000
+Config.itemrefined.label = 'Tabac Blond Sec'
+Config.itemrefined.name = 'tabacblond'
+Config.itemrefined.give = 1
 
 -- SELL 1
-Config.maxitemsell = 50
-Config.timeToSell = 8000
+Config.maxitemsell = 15
+Config.itemrefined.get = 2
+
+Config.timeToSell = 4000
 Config.CraftJobSell = true
 Config.itemsell.label = 'Malboro'
 Config.itemsell.name = 'malbora'
@@ -244,7 +236,7 @@ Config.NotifTitle = "Hé gringo"
 
 -- DONT TOUCH THIS IF YOU ARE NOT SURE !!
 
-Config.InventoryLimit = 25 -- set to 0 if you wont use it (requiere weight & price & limit column on item DB)
-Config.ExternalKeyProduct = true -- Need to false cause special script
+Config.InventoryLimit = 0 -- set to 0 if you wont use it (requiere weight & price & limit column on item DB)
+Config.ExternalKeyProduct = false -- Need to false cause special script
 
 ---
