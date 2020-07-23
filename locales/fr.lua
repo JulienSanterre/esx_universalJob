@@ -112,6 +112,7 @@ Locales['fr'] = {
   ['is_dangerous']	            = "Arrete de jouer au con, tu va te faire prendre",
   ['max_item_sell']  = "Tu as déja le maximum de Malboro sur toi !",
   ['max_item_refined']  = "Tu as déja le maximum de Tabac blond sec sur toi !",
+  ['weight_over']  = "Tu est trop lourd !",
     -- Action Menu
   ['citizen_interaction'] = 'interaction avec le kidnappé',
   ['vehicle_interaction'] = 'interaction véhicule',
