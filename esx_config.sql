@@ -21,12 +21,7 @@ INSERT INTO `job_grades` (job_name, grade, name, label, salary, skin_male, skin_
 INSERT INTO `items` (name, label) VALUES
   ('tabacblond', 'Tabac Blond'),
   ('tabacblondsec', 'Tabac Blond Séché'),
-  ('malbora', 'Marlboro'),
-  
-INSERT INTO `items` (name, label) VALUES
-  ('tabacblond', 'Tabac Blond'),
-  ('tabacblondsec', 'Tabac Blond Séché'),
-  ('malbora', 'Marlboro'),
+  ('malbora', 'Marlboro');
   
 ## For custom DB
   

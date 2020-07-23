@@ -240,5 +240,6 @@ Config.PhoneIcon = "data:image/x-icon;base64,AAABAAkAAAAAAAEAIADWIAAAlgAAAICAAAA
 Config.InventoryLimit = 0 -- set to 0 if you wont use it (requiere weight & price & limit column on item DB)
 Config.ExternalKeyProduct = false -- Need to false cause special script
 Config.ItemDbCount = false -- Active if your db got `limit` column / Need Config.InventoryLimit ~= 0
+Config.UserDbInventoryLimit = false -- Active if you got `maxweight` column in user table Db 
 
 ---

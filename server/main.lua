@@ -30,8 +30,15 @@ local xPlayer  = ESX.GetPlayerFromId(source)
 local value = 0
 local targetItem = {}
 local playerWeight = 0
+local maxitemcollect = Config.maxitemcollect
+local UserDbInventoryLimit = Config.InventoryLimit
+
   SetTimeout(Config.timeTocollect, function()
-	if Config.InventoryLimit ~= 0 then	
+	if UserDbInventoryLimit ~= 0 then
+		if Config.UserDbInventoryLimit then
+			data = MySQL.Sync.fetchAll('SELECT `maxweight` FROM users WHERE identifier = @identifier', { ['@identifier'] = xPlayer.identifier})
+			UserDbInventoryLimit = data[1]
+		end
 		playerInventoryCheck = MySQL.Sync.fetchAll('SELECT `name`, `limit`, `weight`, `price`, `can_remove`, `count` FROM user_inventory INNER JOIN items ON user_inventory.item = items.name AND user_inventory.identifier = @identifier ', { ['@identifier'] = xPlayer.identifier })		
 		for i = 1, #playerInventoryCheck, 1 do
 			playerWeight = playerWeight + playerInventoryCheck[i].weight * playerInventoryCheck[i].count
@@ -39,13 +46,16 @@ local playerWeight = 0
 				targetItem = playerInventoryCheck[i]
 			end
 		end
+		if Config.ItemDbCount then
+			maxitemcollect = targetItem.limit
+		end
 	end
+	
     if PlayersHarvesting[source] == true then
-
       
-		if Config.InventoryLimit ~= 0 or Config.InventoryLimit ~= nil then
-			if (playerWeight + (targetItem.weight * Config.itemrefined.give)) < Config.InventoryLimit then
-				if xPlayer.getInventoryItem(Config.itemcollect.name).count >= Config.maxitemcollect then
+		if UserDbInventoryLimit ~= 0 or UserDbInventoryLimit ~= nil then
+			if (playerWeight + (targetItem.weight * Config.itemrefined.give)) < UserDbInventoryLimit then
+				if xPlayer.getInventoryItem(Config.itemcollect.name).count >= maxitemcollect then
 					TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('you_do_not_room'))
 				else
 					value = targetItem.count + Config.itemcollect.give
@@ -57,7 +67,7 @@ local playerWeight = 0
 				TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('weight_over'))
 			end
 		else
-			if xPlayer.getInventoryItem(Config.itemcollect.name).count >= Config.maxitemcollect then
+			if xPlayer.getInventoryItem(Config.itemcollect.name).count >= maxitemcollect then
 				TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('you_do_not_room'))
 			else
 				xPlayer.addInventoryItem(Config.itemcollect.name, Config.itemcollect.give)
@@ -92,9 +102,15 @@ local targetItem = {}
 local targetItem2 = {}
 local playerWeight = 0
 local xPlayer  = ESX.GetPlayerFromId(source)
+local maxitemrefined = Config.maxitemrefined
+local UserDbInventoryLimit = Config.InventoryLimit
 	
 	SetTimeout(Config.timeToRefined, function()
 		if Config.InventoryLimit ~= 0 then	
+			if Config.UserDbInventoryLimit then
+				data = MySQL.Sync.fetchAll('SELECT `maxweight` FROM users WHERE identifier = @identifier', { ['@identifier'] = xPlayer.identifier})
+				UserDbInventoryLimit = data[1]
+			end
 			playerInventoryCheck = MySQL.Sync.fetchAll('SELECT `name`, `limit`, `weight`, `price`, `can_remove`, `count` FROM user_inventory INNER JOIN items ON user_inventory.item = items.name AND user_inventory.identifier = @identifier ', { ['@identifier'] = xPlayer.identifier })		
 			for i = 1, #playerInventoryCheck, 1 do
 				playerWeight = playerWeight + playerInventoryCheck[i].weight * playerInventoryCheck[i].count
@@ -105,12 +121,16 @@ local xPlayer  = ESX.GetPlayerFromId(source)
 					targetItem2 = playerInventoryCheck[i]
 				end
 			end
+			if Config.ItemDbCount then
+				maxitemrefined = targetItem2.limit
+			end
 		end
+		
 		if PlayersCrafting[source] == true then
-			if Config.InventoryLimit ~= 0 or Config.InventoryLimit ~= nil then
-				if (playerWeight + (targetItem.weight * Config.itemrefined.give - targetItem2.weight * Config.itemrecolte.get)) < Config.InventoryLimit then
+			if UserDbInventoryLimit ~= 0 or UserDbInventoryLimit ~= nil then
+				if (playerWeight + (targetItem.weight * Config.itemrefined.give - targetItem2.weight * Config.itemrecolte.get)) < UserDbInventoryLimit then
 					if xPlayer.getInventoryItem(Config.itemcollect.name).count >= Config.itemrecolte.get then
-						if xPlayer.getInventoryItem(Config.itemrefined.name).count < Config.maxitemrefined then
+						if xPlayer.getInventoryItem(Config.itemrefined.name).count < maxitemrefined then
 							xPlayer.removeInventoryItem(Config.itemcollect.name, Config.itemrecolte.get)
 							xPlayer.addInventoryItem(Config.itemrefined.name, Config.itemrefined.give)
 							value = targetItem.count + Config.itemrefined.give
@@ -129,7 +149,7 @@ local xPlayer  = ESX.GetPlayerFromId(source)
 				end
 			else
 				if xPlayer.getInventoryItem(Config.itemcollect.name).count >= Config.itemrecolte.get then
-					if xPlayer.getInventoryItem(Config.itemrefined.name).count < Config.maxitemrefined then
+					if xPlayer.getInventoryItem(Config.itemrefined.name).count < maxitemrefined then
 						xPlayer.removeInventoryItem(Config.itemcollect.name, Config.itemrecolte.get)
 						xPlayer.addInventoryItem(Config.itemrefined.name, Config.itemrefined.give)
 						callCraft(_source)
@@ -168,9 +188,15 @@ local value2 = 0
 local targetItem = {}
 local targetItem2 = {}
 local playerWeight = 0
+local maxitemsell = Config.maxitemsell
+local UserDbInventoryLimit = Config.InventoryLimit
 
   SetTimeout(Config.timeToRefined, function()
-	if Config.InventoryLimit ~= 0 then	
+	if Config.InventoryLimit ~= 0 then
+		if Config.UserDbInventoryLimit then
+			data = MySQL.Sync.fetchAll('SELECT `maxweight` FROM users WHERE identifier = @identifier', { ['@identifier'] = xPlayer.identifier})
+			UserDbInventoryLimit = data[1]
+		end	
 		playerInventoryCheck = MySQL.Sync.fetchAll('SELECT `name`, `limit`, `weight`, `price`, `can_remove`, `count` FROM user_inventory INNER JOIN items ON user_inventory.item = items.name AND user_inventory.identifier = @identifier ', { ['@identifier'] = xPlayer.identifier })		
 		for i = 1, #playerInventoryCheck, 1 do
 			playerWeight = playerWeight + playerInventoryCheck[i].weight * playerInventoryCheck[i].count
@@ -181,12 +207,16 @@ local playerWeight = 0
 				targetItem2 = playerInventoryCheck[i]
 			end
 		end
+		if Config.ItemDbCount then
+			maxitemsell = targetItem.limit
+		end
 	end
+	
     if PlayersCrafting2[source] == true then
-		if Config.InventoryLimit ~= 0 or Config.InventoryLimit ~= nil then
-			if (playerWeight + (targetItem.weight * Config.itemsell.give - targetItem2.weight * Config.itemrefined.get)) < Config.InventoryLimit then	  
+		if UserDbInventoryLimit ~= 0 or UserDbInventoryLimit ~= nil then
+			if (playerWeight + (targetItem.weight * Config.itemsell.give - targetItem2.weight * Config.itemrefined.get)) < UserDbInventoryLimit then	  
 				if xPlayer.getInventoryItem(Config.itemrefined.name).count >= Config.itemrefined.get then
-					if xPlayer.getInventoryItem(Config.itemsell.name).count < Config.maxitemsell then
+					if xPlayer.getInventoryItem(Config.itemsell.name).count < maxitemsell then
 						xPlayer.removeInventoryItem(Config.itemrefined.name, Config.itemrefined.get)
 						xPlayer.addInventoryItem(Config.itemsell.name , Config.itemsell.give)
 						value = targetItem.count + Config.itemrefined.give
@@ -205,7 +235,7 @@ local playerWeight = 0
 			end
 		else
 			if xPlayer.getInventoryItem(Config.itemrefined.name).count >= Config.itemrefined.get then
-				if xPlayer.getInventoryItem(Config.itemsell.name).count < Config.maxitemsell then
+				if xPlayer.getInventoryItem(Config.itemsell.name).count < maxitemsell then
 					xPlayer.removeInventoryItem(Config.itemrefined.name, Config.itemrefined.get)
 					xPlayer.addInventoryItem(Config.itemsell.name , Config.itemsell.give)
 					callCraft2(_source)
@@ -303,9 +333,13 @@ AddEventHandler('esx_'.. Config.JobName ..':getStockItem', function(itemName, co
 	local targetItem = xPlayer.getInventoryItem(itemName)
 	local invPos = 0
 	local playerWeight = 0
-	local invLimit = Config.InventoryLimit
+	local UserDbInventoryLimit = Config.InventoryLimit
 	
 	if Config.InventoryLimit ~= 0 then	
+		if Config.UserDbInventoryLimit then
+			data = MySQL.Sync.fetchAll('SELECT `maxweight` FROM users WHERE identifier = @identifier', { ['@identifier'] = xPlayer.identifier})
+			UserDbInventoryLimit = data[1]
+		end	
 		playerInventoryCheck = MySQL.Sync.fetchAll('SELECT `name`, `limit`, `weight`, `price`, `can_remove`, `count` FROM user_inventory INNER JOIN items ON user_inventory.item = items.name AND user_inventory.identifier = @identifier ', { ['@identifier'] = xPlayer.identifier })
 
 		for i = 1, #playerInventoryCheck, 1 do
@@ -322,9 +356,9 @@ AddEventHandler('esx_'.. Config.JobName ..':getStockItem', function(itemName, co
 		end
 	end
 	
-	if Config.InventoryLimit ~= 0 or Config.InventoryLimit ~= nil then
+	if UserDbInventoryLimit ~= 0 or UserDbInventoryLimit ~= nil then
 		if canPut == 0 then
-			if ( playerWeight + (playerInventoryCheck[invPos].weight * count)) < invLimit then 
+			if ( playerWeight + (playerInventoryCheck[invPos].weight * count)) < UserDbInventoryLimit then 
 				if targetItem.count + count <= targetItem.limit then
 					
 					TriggerEvent('esx_addoninventory:getSharedInventory', 'society_'.. Config.JobName, function(inventory)
@@ -525,7 +559,7 @@ local function callSell(source, zone)
 		return
 	  else
 		  SetTimeout(Config.timeToSell, function()
-			if Config.ComSealer > Config.CraftJobprice then
+			if Config.ComSealer > Config.CraftJobprice then -- Soon player Config so need to patch glitch way
 				Config.ComSealer  = Config.CraftJobprice
 			end
 			local money = Config.CraftJobprice - Config.ComSealer
@@ -541,6 +575,7 @@ local function callSell(source, zone)
 			if societyAccount ~= nil then
 			  societyAccount.addMoney(money)
 			  xPlayer.addMoney(Config.ComSealer)
+			  --TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('comp_earned').. money)
 			end
 			callSell(_source, zone)
 		  end)
