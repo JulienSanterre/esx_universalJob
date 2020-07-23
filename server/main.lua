@@ -575,7 +575,6 @@ local function callSell(source, zone)
 			if societyAccount ~= nil then
 			  societyAccount.addMoney(money)
 			  xPlayer.addMoney(Config.ComSealer)
-			  --TriggerClientEvent('esx_'.. Config.JobName ..':RageMsg',_source,Config.NotifTitle, _U('comp_earned').. money)
 			end
 			callSell(_source, zone)
 		  end)
