@@ -20,8 +20,5 @@ INSERT INTO `job_grades` (job_name, grade, name, label, salary, skin_male, skin_
 
 INSERT INTO `items` (name, label) VALUES
   ('tabacblond', 'Tabac Blond'),
-  ('tabacbrun', 'Tabac Brun'),
   ('tabacblondsec', 'Tabac Blond Séché'),
-  ('tabacbrunsec', 'Tabac Brun Séché'),
   ('malbora', 'Marlboro'),
-  ('gitanes', 'Gitanes');
