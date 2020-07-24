@@ -242,4 +242,8 @@ Config.ExternalKeyProduct = false -- Need to false cause special script
 Config.ItemDbCount = false -- Active if your db got `limit` column / Need Config.InventoryLimit ~= 0
 Config.UserDbInventoryLimit = false -- Active if you got `maxweight` column in user table Db 
 
+-- FX debug
+
+Config.DEBUG = false
+
 ---
