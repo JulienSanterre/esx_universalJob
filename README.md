@@ -25,6 +25,11 @@ The procedure is as follows:
 - Modify your Locales / fr file (or other languages)
 - And start clone process in server.cfg
 
+## Optionnal
+Can be configure to use : inventory weight
+Can be configure to use : item Limit
+Can be configure to use Key system (to not give more than 1 vehicule to owner)
+
 ## Legal
 License
 esx_universalJob
