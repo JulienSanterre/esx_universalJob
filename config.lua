@@ -181,18 +181,18 @@ Config.MaxInService = -1
 
 -- ADD RESTRICTION FOR PUT IN STORE
 Config.cantPutThis = {
-	"pistol50",
-	"assaultrifle",
-	"microsmg",
-	"kevlar",
+	--"pistol50",
+	--"assaultrifle",
+	--"microsmg",
+	--"kevlar",
 }
 
 -- ADD RESTRICTION FOR GET FROM STORE
 Config.cantGetThis = {
-	"pistol50",
-	"assaultrifle",
-	"microsmg",
-	"kevlar",
+	--"pistol50",
+	--"assaultrifle",
+	--"microsmg",
+	--"kevlar",
 }
 
 -- COLLECT
