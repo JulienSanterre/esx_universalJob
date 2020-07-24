@@ -179,7 +179,7 @@ Config.pedSellKey = 'DELETE'
 -- Max employe // -1 = unlimited
 Config.MaxInService = -1
 
--- STORE
+-- ADD RESTRICTION FOR PUT IN STORE
 Config.cantPutThis = {
 	"pistol50",
 	"assaultrifle",
@@ -187,7 +187,7 @@ Config.cantPutThis = {
 	"kevlar",
 }
 
--- UNSTORE
+-- ADD RESTRICTION FOR GET FROM STORE
 Config.cantGetThis = {
 	"pistol50",
 	"assaultrifle",
